@@ -1,0 +1,16 @@
+services:
+  scrapling:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scrapling
+    ports:
+      - "8000:8000"  # MCP server port
+    volumes:
+      - ./crawl_data:/app/crawl_data  # 持久化爬取数据
+      - ./results:/app/results  # 持久化爬取结果
+    environment:
+      - PYTHONUNBUFFERED=1
+      - TZ=UTC
+    command: tail -f /dev/null
+    restart: unless-stopped
